@@ -113,15 +113,15 @@ public class DefaultEventManagerTest
     
     /**
      * Task 1
-     * A Listener should not receive notification from subclasses of its declared events classes
+     * A Listener should receive notification from subclasses of its declared events classes
      */
     @Test
-    public void testListenerIsNotCalledForDerivedEventClasses()
+    public void testListenerIsCalledForDerivedEventClasses()
     {
         EventListenerMock eventListenerMock = new EventListenerMock(new Class[]{SimpleEvent.class});
         eventManager.registerListener("some.key", eventListenerMock);
         eventManager.publishEvent(new SubEvent(this));
-        assertFalse(eventListenerMock.isCalled());
+        assertTrue(eventListenerMock.isCalled());
     }
 
     /**
