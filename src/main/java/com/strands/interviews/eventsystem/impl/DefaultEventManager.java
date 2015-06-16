@@ -32,6 +32,15 @@ public class DefaultEventManager implements EventManager
 
     private Collection calculateListeners(Class eventClass)
     {
+    	if (!listenersByClass.containsKey(eventClass)){
+    		for (Iterator it = listenersByClass.keySet().iterator(); it.hasNext();){
+    			Class aClass = (Class) it.next();
+    			if (aClass.isAssignableFrom(eventClass)){
+    				calculateListeners(aClass);
+    				break;
+    			}
+    		}
+    	}
     	Collection calculatedListeners = (Collection) listenersByClass.get(eventClass);
     	calculatedListeners.addAll((Collection) listenersByClass.get(null));
         return  calculatedListeners;
