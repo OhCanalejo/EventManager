@@ -11,6 +11,7 @@ public class DefaultEventManagerTest
 {
     private EventManager eventManager = new DefaultEventManager();
 
+    
     @Test
     public void testPublishNullEvent()
     {
@@ -109,4 +110,18 @@ public class DefaultEventManagerTest
         {
         }
     }
+    
+    /**
+     * Task 1
+     * A Listener should not receive notification from subclasses of its declared events classes
+     */
+    @Test
+    public void testListenerIsNotCalledForDerivedEventClasses()
+    {
+        EventListenerMock eventListenerMock = new EventListenerMock(new Class[]{SimpleEvent.class});
+        eventManager.registerListener("some.key", eventListenerMock);
+        eventManager.publishEvent(new SubEvent(this));
+        assertFalse(eventListenerMock.isCalled());
+    }
+
 }
