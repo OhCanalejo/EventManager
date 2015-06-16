@@ -124,4 +124,15 @@ public class DefaultEventManagerTest
         assertFalse(eventListenerMock.isCalled());
     }
 
+    /**
+     * Task 2
+     */
+    @Test
+    public void testUniversalListeners()
+    {
+        EventListenerMock eventListenerMock = new EventListenerMock(new Class[]{});
+        eventManager.registerListener("some.key", eventListenerMock);
+        eventManager.publishEvent(new SimpleEvent(this));
+        assertTrue(eventListenerMock.isCalled());
+    }
 }
